@@ -26,12 +26,14 @@ module.exports = {
   },
   getInterviewStudents: (req, res) => {
     pool.query(
-      `SELECT * from STUDENT WHERE interviewyear = ${Number(req.params.id)}`,
+      `SELECT * from STUDENT WHERE interviewyear = ${Number(
+        req.params.id
+      )} ORDER BY docnumber`,
       (error, results) => {
         if (error) {
-          res.status("400").json("Bad Request");
+          res.status(400).json("Bad Request");
         } else {
-          res.status("200").json(results.rows);
+          res.status(200).json(results.rows);
         }
       }
     );
