@@ -1,3 +1,4 @@
+const e = require("express");
 const pool = require("../postgress");
 module.exports = {
   addStudents: (req, res) => {
@@ -44,5 +45,36 @@ module.exports = {
           }
         }
       );
+  },
+  selectStudents: (req, res) => {
+    let body = req.body;
+    let unSelect = () => {
+      pool.query(
+        `UPDATE student SET selected = false WHERE docNumber  = ANY(ARRAY[${body.unSelecteds}])
+      `,
+        (error) => {
+          if (error) res.status(400).json("Bad request (unSelecteds)");
+          else res.status(200).json("updated");
+        }
+      );
+    };
+    if (body.selecteds.length) {
+      pool.query(
+        `UPDATE student SET selected = true WHERE docNumber  = ANY(ARRAY[${body.selecteds}])
+    `,
+        (error) => {
+          if (error) {
+            res.status(400).json("Bad request (selecteds)");
+          } else {
+            if (body.unSelecteds.length) unSelect();
+            else res.status(200).json("updated");
+          }
+        }
+      );
+    } else if (body.unSelecteds.length) {
+      unSelect();
+    } else {
+      res.status(200).json("updated");
+    }
   },
 };
