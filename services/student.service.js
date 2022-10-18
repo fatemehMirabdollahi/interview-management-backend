@@ -77,4 +77,17 @@ module.exports = {
       res.status(200).json("updated");
     }
   },
+  getSchedulingStudent: (req, res) => {
+    let year = req.params.year;
+    pool.query(
+      `SELECT docnumber,studentname,lastname from student where interviewYear=${year} AND selected = true`,
+      (error, results) => {
+        if (error) {
+          res.status("400").json("Bad Request");
+        } else {
+          res.status("200").json(results.rows);
+        }
+      }
+    );
+  },
 };
