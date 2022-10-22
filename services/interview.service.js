@@ -2,7 +2,7 @@ const pool = require("../postgress");
 module.exports = {
   getInterviews: (req, res) => {
     pool.query(
-      'SELECT "interviewyear" AS "interview_year", count(*) AS "students_number" FROM "public"."student" GROUP BY "interviewyear" ORDER BY "interviewyear" DESC',
+      'SELECT "interviewyear" AS "interview_year", count(*) AS "students_number", count(talent=true) AS "talent"  FROM "public"."student" GROUP BY "interviewyear" ORDER BY "interviewyear" DESC',
       (error, results) => {
         if (error) {
           res.status(400).json("Bad Request");
@@ -27,7 +27,7 @@ module.exports = {
   getInterviewStudents: (req, res) => {
     pool.query(
       `SELECT * from STUDENT WHERE interviewyear = ${Number(
-        req.params.id
+        req.params.year
       )} ORDER BY docnumber`,
       (error, results) => {
         if (error) {
