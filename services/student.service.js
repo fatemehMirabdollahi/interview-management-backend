@@ -14,7 +14,7 @@ module.exports = {
             res.status(409).json("there is a interview for this year");
           } else {
             pool.query(
-              `INSERT INTO interview(interviewYear) VALUES('${interviewYear}')`,
+              `INSERT INTO interview(interviewyear) VALUES('${interviewYear}')`,
               (error) => {
                 if (error) {
                   console.log(error);
@@ -83,9 +83,9 @@ module.exports = {
       `SELECT docnumber,studentname,lastname from student where interviewYear=${year} AND selected = true`,
       (error, results) => {
         if (error) {
-          res.status("400").json("Bad Request");
+          res.status(400).json("Bad Request");
         } else {
-          res.status("200").json(results.rows);
+          res.status(200).json(results.rows);
         }
       }
     );

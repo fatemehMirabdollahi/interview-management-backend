@@ -67,6 +67,22 @@
 
 -- UPDATE student SET selected = true WHERE docNumber  = ANY(ARRAY[56956,57957])
 
-SELECT docnumber,studentname,lastname from student where interviewYear=1402 AND selected = true
-https://app.swaggerhub.com/apis/FATEMEH1378MIR/interviewManagement/1.0.0#/
-https://app.diagrams.net/?src=about
+-- SELECT docnumber,studentname,lastname from student where interviewYear=1402 AND selected = true
+-- https://app.swaggerhub.com/apis/FATEMEH1378MIR/interviewManagement/1.0.0#/
+-- https://app.diagrams.net/?src=about
+CREATE TABLE meet(
+	meet_id INT GENERATED ALWAYS AS IDENTITY,
+	interviewyear INT,
+	docnumber INT,
+	meetdate VARCHAR(10),
+	starttime VARCHAR(10),
+	endtime VARCHAR(10),
+	CONSTRAINT fk_docnumber
+		FOREIGN KEY(docnumber)
+			REFERENCES student(docnumber)
+			ON DELETE CASCADE,
+	CONSTRAINT	fk_interviewyear
+			FOREIGN KEY(interviewyear)
+				REFERENCES interview(interviewyear)
+				ON DELETE CASCADE
+)
