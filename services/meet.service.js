@@ -57,7 +57,7 @@ module.exports = {
         } else {
           var interview = result.rows[0];
           pool.query(
-            `SELECT starttime,endtime, studentname,lastname,student.docnumber,meetdate,meettype FROM meet LEFT OUTER JOIN student on student.docnumber = meet.docnumber OR meet.docnumber =NULL WHERE meet.interviewyear = ${year} `,
+            `SELECT starttime,endtime, studentname,lastname,student.docnumber,meetdate,meettype,meet_id FROM meet LEFT OUTER JOIN student on student.docnumber = meet.docnumber OR meet.docnumber =NULL WHERE meet.interviewyear = ${year} `,
             (error, result2) => {
               if (error) {
                 res.status(500);
@@ -69,6 +69,7 @@ module.exports = {
                   let date = element.meetdate;
                   if (sortedMeets[date])
                     sortedMeets[date].push({
+                      id: element.meet_id,
                       type: element.meettype,
                       start: {
                         hour: Number(element.starttime.split(":")[0]),
@@ -89,6 +90,7 @@ module.exports = {
                   else
                     sortedMeets[date] = [
                       {
+                        id: element.meet_id,
                         type: element.meettype,
                         start: {
                           hour: Number(element.starttime.split(":")[0]),
