@@ -70,19 +70,34 @@
 -- SELECT docnumber,studentname,lastname from student where interviewYear=1402 AND selected = true
 -- https://app.swaggerhub.com/apis/FATEMEH1378MIR/interviewManagement/1.0.0#/
 -- https://app.diagrams.net/?src=about
-CREATE TABLE meet(
-	meet_id INT GENERATED ALWAYS AS IDENTITY,
-	interviewyear INT,
+-- CREATE TABLE meet(
+-- 	meet_id INT GENERATED ALWAYS AS IDENTITY,
+-- 	interviewyear INT,
+-- 	docnumber INT,
+-- 	meetdate VARCHAR(10),
+-- 	starttime VARCHAR(10),
+-- 	endtime VARCHAR(10),
+-- 	CONSTRAINT fk_docnumber
+-- 		FOREIGN KEY(docnumber)
+-- 			REFERENCES student(docnumber)
+-- 			ON DELETE CASCADE,
+-- 	CONSTRAINT	fk_interviewyear
+-- 			FOREIGN KEY(interviewyear)
+-- 				REFERENCES interview(interviewyear)
+-- 				ON DELETE CASCADE
+-- )
+-- SELECT docnumber, chosenfields, studentname, lastname, fathername, talent, gender, birthdate, bacheloruni, bachelorfield, masteruni, masterfield, thesistitle, mastersupervisorname, diplomagrade, writtendiplomagrade, bachelorgrade, gradewithoutthesis, gradewiththesis, bachelordate, masterdate, employmentstatus, quota, phonenumber, email, homeaddress, evnumber from student WHERE docnumber = 56957
+
+
+CREATE TABLE comment(
+	comment_id INT GENERATED ALWAYS AS IDENTITY,
 	docnumber INT,
-	meetdate VARCHAR(10),
-	starttime VARCHAR(10),
-	endtime VARCHAR(10),
+	user_id INT,
+	firstimpression TEXT,
+	comments TEXT,
+	favphdfields TEXT,
 	CONSTRAINT fk_docnumber
 		FOREIGN KEY(docnumber)
 			REFERENCES student(docnumber)
-			ON DELETE CASCADE,
-	CONSTRAINT	fk_interviewyear
-			FOREIGN KEY(interviewyear)
-				REFERENCES interview(interviewyear)
-				ON DELETE CASCADE
+			ON DELETE CASCADE
 )

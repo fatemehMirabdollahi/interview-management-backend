@@ -90,4 +90,17 @@ module.exports = {
       }
     );
   },
+  getStudent: (req, res) => {
+    let docnumber = req.params.docnumber;
+    pool.query(
+      `SELECT docnumber, chosenfields, studentname, lastname, fathername, talent, gender, birthdate, bacheloruni, bachelorfield, masteruni, masterfield, thesistitle, mastersupervisorname, diplomagrade, writtendiplomagrade, bachelorgrade, gradewiththesis, bachelordate, masterdate, employmentstatus, quota, phonenumber, email, homeaddress, evnumber from student WHERE docnumber = ${docnumber}`,
+      (error, results) => {
+        if (error) {
+          res.status(400).json("Bad Request");
+        } else {
+          res.status(200).json(results.rows[0]);
+        }
+      }
+    );
+  },
 };
