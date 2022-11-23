@@ -89,15 +89,17 @@
 -- SELECT docnumber, chosenfields, studentname, lastname, fathername, talent, gender, birthdate, bacheloruni, bachelorfield, masteruni, masterfield, thesistitle, mastersupervisorname, diplomagrade, writtendiplomagrade, bachelorgrade, gradewithoutthesis, gradewiththesis, bachelordate, masterdate, employmentstatus, quota, phonenumber, email, homeaddress, evnumber from student WHERE docnumber = 56957
 
 
-CREATE TABLE comment(
-	comment_id INT GENERATED ALWAYS AS IDENTITY,
-	docnumber INT,
-	user_id INT,
-	firstimpression TEXT,
-	comments TEXT,
-	favphdfields TEXT,
-	CONSTRAINT fk_docnumber
-		FOREIGN KEY(docnumber)
-			REFERENCES student(docnumber)
-			ON DELETE CASCADE
-)
+-- CREATE TABLE comment(
+-- 	comment_id INT GENERATED ALWAYS AS IDENTITY,
+-- 	docnumber INT,
+-- 	user_id INT,
+-- 	firstimpression TEXT,
+-- 	comments TEXT,
+-- 	favphdfields TEXT,
+-- 	CONSTRAINT fk_docnumber
+-- 		FOREIGN KEY(docnumber)
+-- 			REFERENCES student(docnumber)
+-- 			ON DELETE CASCADE
+-- )
+-- INSERT INTO comment(docnumber, user_id, firstimpression, opinion, favphdfields) VALUES(57957,1,'good','very good','fields')
+SELECT docnumber, user_id, firstimpression, opinion, favphdfields from comment WHERE docnumber = 57957
