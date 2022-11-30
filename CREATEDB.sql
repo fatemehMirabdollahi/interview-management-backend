@@ -101,5 +101,6 @@
 -- 			REFERENCES student(docnumber)
 -- 			ON DELETE CASCADE
 -- )
--- INSERT INTO comment(docnumber, user_id, firstimpression, opinion, favphdfields) VALUES(57957,1,'good','very good','fields')
-SELECT docnumber, user_id, firstimpression, opinion, favphdfields from comment WHERE docnumber = 57957
+-- -- INSERT INTO comment(docnumber, user_id, firstimpression, opinion, favphdfields) VALUES(57957,1,'good','very good','fields')
+-- SELECT docnumber, user_id, firstimpression, opinion, favphdfields from comment WHERE docnumber = 57957
+SELECT * FROM user WHERE username = admin
