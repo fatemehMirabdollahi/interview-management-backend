@@ -103,4 +103,8 @@
 -- )
 -- -- INSERT INTO comment(docnumber, user_id, firstimpression, opinion, favphdfields) VALUES(57957,1,'good','very good','fields')
 -- SELECT docnumber, user_id, firstimpression, opinion, favphdfields from comment WHERE docnumber = 57957
-SELECT * FROM user WHERE username = admin
+-- SELECT professor.username FROM professor WHERE professor.name = 'ew'
+-- SELECT docnumber, username, firstimpression, opinion, favphdfields from comment WHERE username = 'admin'
+-- UPDATE professor SET name='dr.admin' where username='admin'
+UPDATE professor SET field='نرم افزار و سامانه های اطلاعاتی' WHERE "username"='admin'
+

@@ -6,55 +6,67 @@ module.exports = {
     console.log("register");
     var user = req.body;
     pool.query(
-      `SELECT username FROM user WHERE username = $$${user.username}$$`,
+      `SELECT professor.username FROM professor WHERE professor.name = '${user.username}'`,
       async (error, results) => {
         if (error) {
+          console.log("Select Error");
           res.status(500);
-        }
-        if (results?.rows?.length) {
-          console.log(results);
+        } else if (results?.rows?.length) {
           res.status(409).json("User already exist.");
-        }
-        encryptedPassword = await bcrypt.hash(user.password, 10);
-        pool.query(
-          `INSERT INTO user(name, username, password) VALUES(${user.name}, ${user.username}, ${encryptedPassword})`,
-          (error) => {
-            if (error) {
-              console.log(error);
-              res.status(500);
-            }
-            const token = jwt.sign(
-              { username: user.username },
-              process.env.TOKEN_KEY,
-              {
-                expiresIn: "2h",
+        } else {
+          encryptedPassword = await bcrypt.hash(user.password, 10);
+      
+          pool.query(
+            `INSERT INTO professor(name, username, password) VALUES('${user.name}', '${user.username}', '${encryptedPassword}')`,
+            (error) => {
+              if (error) {
+                console.log(error);
+                res.status(500);
+              } else {
+                const token = jwt.sign(
+                  { username: user.username },
+                  "interview-managment",
+                  {
+                    expiresIn: "2h",
+                  }
+                );
+                res.status(201);
               }
-            );
-            res.status(201).json(token);
-          }
-        );
+            }
+          );
+        }
       }
     );
   },
   login: (req, res) => {
     const { username, password } = req.body;
+    console.log(username, password);
     pool.query(
-      ` SELECT * FROM user WHERE username = ${username}`,
-      async (result) => {
-        if (!result.rows.length) {
-          res.status(401);
+      `SELECT * FROM professor WHERE username = '${username}'`,
+      async (error, result) => {
+        if (error) {
+          console.log(error);
+          res.status(500).json("eror");
+        }
+        if (!result?.rows?.length) {
+          res.status(500).json("not found");
         } else {
           let user = result.rows[0];
           if (!(await bcrypt.compare(password, user.password))) {
-            res.status(401);
+            res.status(500).json("wrong pass");
+          } else {
+            const token = jwt.sign(
+              { username: user.username },
+              "interview-managment",
+              {
+                expiresIn: "2h",
+              }
+            );
+            user.token = token;
+            res
+              .status(201)
+              .json({ username: user.username, token: user.token });
           }
-          const token = jwt.sign(
-            { username: user.username },
-            process.env.TOKEN_KEY,
-            {
-              expiresIn: "2h",
-            }
-          );
         }
       }
     );

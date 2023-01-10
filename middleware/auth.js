@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
 
-const config = process.env;
+const config = {
+  TOKEN_KEY: "interview-managment",
+};
 
 const verifyToken = (req, res, next) => {
   const token =
