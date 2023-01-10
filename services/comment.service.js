@@ -3,7 +3,7 @@ module.exports = {
   addComment: (req, res) => {
     let comment = req.body;
     pool.query(
-      `SELECT docnumber, user_id, firstimpression, opinion, favphdfields from comment WHERE user_id=${comment.user_id}`,
+      `SELECT docnumber, username, firstimpression, opinion, favphdfields from comment WHERE username='${comment.username}' AND docnumber = '${comment.docnumber}' `,
       (error, results) => {
         if (error) {
           console.log(error);
@@ -11,7 +11,7 @@ module.exports = {
         } else {
           if (results.rows.length) {
             pool.query(
-              `UPDATE comment SET firstimpression = $$${comment.firstimpression}$$, opinion = $$${comment.opinion}$$, favphdfields = $$${comment.favphdfields}$$ WHERE user_id = ${comment.user_id}`,
+              `UPDATE comment SET firstimpression = $$${comment.firstimpression}$$, opinion = $$${comment.opinion}$$, favphdfields = $$${comment.favphdfields}$$ WHERE username = '${comment.username}  AND docnumber = '${comment.docnumber}'`,
               (error) => {
                 if (error) {
                   console.log(error);
@@ -21,7 +21,7 @@ module.exports = {
             );
           } else {
             pool.query(
-              `INSERT INTO comment(docnumber, user_id, firstimpression, opinion, favphdfields) VALUES(${comment.docnumber},${comment.user_id},$$${comment.firstimpression}$$,$$${comment.opinion}$$,$$${comment.favphdfields}$$)`,
+              `INSERT INTO comment(docnumber, username, firstimpression, opinion, favphdfields) VALUES(${comment.docnumber},$$${comment.username}$$,$$${comment.firstimpression}$$,$$${comment.opinion}$$,$$${comment.favphdfields}$$)`,
               (error) => {
                 if (error) {
                   console.log(error);
@@ -37,7 +37,7 @@ module.exports = {
   getComments: (req, res) => {
     let docnumber = req.params.id;
     pool.query(
-      `SELECT docnumber, user_id, firstimpression, opinion, favphdfields from comment WHERE docnumber=${docnumber}`,
+      `SELECT docnumber, name, firstimpression, opinion, favphdfields from comment INNER JOIN professor on comment.username = professor.username  WHERE docnumber=${docnumber}`,
       (error, results) => {
         if (error) {
           console.log(error);
