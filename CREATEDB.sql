@@ -106,5 +106,6 @@
 -- SELECT professor.username FROM professor WHERE professor.name = 'ew'
 -- SELECT docnumber, username, firstimpression, opinion, favphdfields from comment WHERE username = 'admin'
 -- UPDATE professor SET name='dr.admin' where username='admin'
-UPDATE professor SET field='نرم افزار و سامانه های اطلاعاتی' WHERE "username"='admin'
+-- UPDATE professor SET field='نرم افزار و سامانه های اطلاعاتی' WHERE "username"='admin'
+SELECT fieldnumber, formnumber, how, max, grade FROM assessment WHERE docnumber = '57957'
 

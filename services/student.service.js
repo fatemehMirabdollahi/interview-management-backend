@@ -50,7 +50,7 @@ module.exports = {
     let body = req.body;
     let unSelect = () => {
       pool.query(
-        `UPDATE student SET selected = false WHERE docNumber  = ANY(ARRAY[${body.unSelecteds}])
+        `UPDATE student SET selected = false WHERE docnumber  = ANY(ARRAY[${body.unSelecteds}])
       `,
         (error) => {
           if (error) res.status(400).json("Bad request (unSelecteds)");
@@ -60,7 +60,7 @@ module.exports = {
     };
     if (body.selecteds.length) {
       pool.query(
-        `UPDATE student SET selected = true WHERE docNumber  = ANY(ARRAY[${body.selecteds}])
+        `UPDATE student SET selected = true WHERE docnumber  = ANY(ARRAY[${body.selecteds}])
     `,
         (error) => {
           if (error) {
