@@ -38,4 +38,16 @@ module.exports = {
       }
     );
   },
+  delelteInterview: (req, res) => {
+    let year = req.params.year;
+    pool.query(
+      `DELETE FROM interview WHERE interviewyear = '${year}'`,
+      (error) => {
+        if (error) {
+          console.log(error);
+          res.status(500).json(error)}
+        else res.status(200).json("ok");
+      }
+    );
+  },
 };
