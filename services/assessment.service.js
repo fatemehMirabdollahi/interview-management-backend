@@ -39,7 +39,7 @@ module.exports = {
                   if (error) {
                     console.log(error);
                     res.status(400).json(error);
-                  } else {
+                  } else {``
                     res.status(200).json("successfull");
                   }
                 }
